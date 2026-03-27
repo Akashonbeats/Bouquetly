@@ -1,0 +1,149 @@
+.gift-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    175deg,
+    var(--surface) 0%,
+    var(--surface-container-low) 50%,
+    var(--primary-fixed) 100%
+  );
+}
+
+.gift-page--error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  text-align: center;
+  padding-top: var(--space-24);
+}
+
+/* Floating petals */
+.gift-page__petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gift-page__floating-petal {
+  position: absolute;
+  opacity: 0.15;
+  animation: petalDrift 8s ease-in-out infinite;
+}
+
+.gift-page__floating-petal--1 { top: 8%; right: 8%; animation-delay: 0s; }
+.gift-page__floating-petal--2 { top: 30%; left: 5%; animation-delay: 2s; }
+.gift-page__floating-petal--3 { bottom: 25%; right: 12%; animation-delay: 4s; }
+.gift-page__floating-petal--4 { bottom: 8%; left: 10%; animation-delay: 1s; }
+
+/* Header */
+.gift-page__header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-8);
+}
+
+.gift-page__logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+/* Content */
+.gift-page__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-10) 0 var(--space-20);
+}
+
+.gift-page__hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.gift-page__dedication {
+  color: var(--on-surface);
+}
+
+.gift-page__dedication em {
+  color: var(--primary);
+  font-style: italic;
+}
+
+/* Bouquet */
+.gift-page__bouquet {
+  padding: var(--space-8);
+  background: rgba(245, 245, 220, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(213, 194, 196, 0.1);
+}
+
+/* Flower meanings */
+.gift-page__meanings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  max-width: 700px;
+}
+
+.gift-page__meaning {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 12px rgba(129, 81, 90, 0.04);
+}
+
+.gift-page__meaning div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Note */
+.gift-page__note {
+  max-width: 480px;
+  width: 100%;
+}
+
+/* Footer */
+.gift-page__footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--space-8);
+}
+
+@media (max-width: 600px) {
+  .gift-page__header {
+    padding: var(--space-4);
+  }
+  .gift-page__content {
+    gap: var(--space-8);
+    padding: var(--space-6) 0 var(--space-12);
+  }
+  .gift-page__meanings {
+    gap: var(--space-2);
+  }
+  .gift-page__floating-petal {
+    display: none;
+  }
+}

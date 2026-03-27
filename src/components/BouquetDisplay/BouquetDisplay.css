@@ -1,0 +1,73 @@
+.bouquet-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bouquet-display--large .bouquet-display__canvas {
+  width: 400px;
+  height: 460px;
+}
+
+.bouquet-display--small .bouquet-display__canvas {
+  width: 260px;
+  height: 300px;
+}
+
+.bouquet-display__canvas {
+  position: relative;
+}
+
+/* Bush layers — fill the canvas */
+.bouquet-display__bush {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bouquet-display__bush--back {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.bouquet-display__bush--top {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 20;
+}
+
+/* Flower images — positioned absolutely */
+.bouquet-display__flower {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+  transition: transform 0.4s var(--ease-out);
+}
+
+/* Subtle gentle animation */
+.bouquet-display__flower:nth-child(odd) {
+  animation: flowerSway 7s ease-in-out infinite;
+}
+
+.bouquet-display__flower:nth-child(even) {
+  animation: flowerSway 8s ease-in-out infinite reverse;
+}
+
+@keyframes flowerSway {
+  0%, 100% { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08)); }
+  50% { filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1)); transform: translate(-50%, -50%) translateY(-2px); }
+}
+
+@media (max-width: 600px) {
+  .bouquet-display--large .bouquet-display__canvas {
+    width: 300px;
+    height: 340px;
+  }
+}

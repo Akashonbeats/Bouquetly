@@ -1,0 +1,174 @@
+/* ═══════════════════════════════════════════════════════════════
+   Builder Pages — Shared Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.builder-page {
+  padding-top: 100px;
+  padding-bottom: var(--space-8);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.builder-page__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+}
+
+.builder-page__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.builder-page__counter {
+  color: var(--outline);
+}
+
+.builder-page__counter strong {
+  color: var(--primary);
+  font-size: 1.1em;
+}
+
+.builder-page__hint {
+  color: var(--outline);
+  opacity: 0.8;
+}
+
+.builder-page__content {
+  flex: 1;
+}
+
+/* Flower Grid */
+.flower-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+/* Split layout */
+.builder-page__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.builder-page__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.builder-page__preview {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.builder-page__preview-placeholder {
+  width: 240px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-container);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--outline-variant);
+}
+
+/* Navigation */
+.builder-page__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-10);
+  margin-top: auto;
+}
+
+/* ── Note Form ── */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.note-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.note-form__field label {
+  color: var(--on-surface-variant);
+}
+
+.note-form__input,
+.note-form__textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--on-surface);
+  background: var(--surface-container-low);
+  border: none;
+  border-bottom: 2px solid var(--outline-variant);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  padding: var(--space-4);
+  outline: none;
+  transition: border-color var(--duration-fast) ease;
+}
+
+.note-form__input:focus,
+.note-form__textarea:focus {
+  border-bottom-color: var(--primary);
+}
+
+.note-form__textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.note-form__charcount {
+  text-align: right;
+  color: var(--outline);
+  font-size: 0.75rem;
+}
+
+.note-form__preview {
+  position: sticky;
+  top: 100px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .flower-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  .builder-page__split {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  .builder-page__preview,
+  .note-form__preview {
+    position: static;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .flower-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .builder-page {
+    padding-top: 80px;
+  }
+}

@@ -1,0 +1,87 @@
+.flower-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4) var(--space-5);
+  background: var(--surface-container-lowest);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  font-family: inherit;
+  text-align: center;
+  outline: none;
+}
+
+.flower-card:hover:not(.flower-card--disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(129, 81, 90, 0.08);
+  background: var(--surface-container-lowest);
+}
+
+.flower-card:focus-visible {
+  box-shadow: 0 0 0 3px var(--primary-fixed-dim);
+}
+
+.flower-card--selected {
+  border-color: var(--primary);
+  background: var(--primary-fixed);
+  box-shadow: 0 8px 32px rgba(129, 81, 90, 0.12);
+}
+
+.flower-card--selected:hover {
+  border-color: var(--primary);
+  background: var(--primary-fixed);
+}
+
+.flower-card--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.flower-card__illustration {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.flower-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.flower-card:hover:not(.flower-card--disabled) .flower-card__illustration {
+  transform: scale(1.08);
+}
+
+.flower-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.flower-card__name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.flower-card__meaning {
+  color: var(--outline);
+  font-size: 0.7rem;
+}
+
+.flower-card__check {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  animation: scaleIn var(--duration-fast) var(--ease-out) both;
+}

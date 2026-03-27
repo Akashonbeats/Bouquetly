@@ -1,0 +1,25 @@
+.footer {
+  margin-top: auto;
+  padding: var(--space-8) 0;
+  background: var(--surface-container);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.footer__brand {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.footer__text {
+  font-size: 0.8rem;
+  color: var(--outline);
+}

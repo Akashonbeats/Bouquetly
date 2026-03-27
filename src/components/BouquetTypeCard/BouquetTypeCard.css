@@ -1,0 +1,76 @@
+.bouquet-type-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-8);
+  background: var(--surface-container-lowest);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  outline: none;
+}
+
+.bouquet-type-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(59, 102, 99, 0.08);
+  background: var(--surface-container-lowest);
+}
+
+.bouquet-type-card:focus-visible {
+  box-shadow: 0 0 0 3px var(--secondary-fixed-dim);
+}
+
+.bouquet-type-card--selected {
+  border-color: var(--secondary);
+  background: var(--secondary-fixed);
+}
+
+.bouquet-type-card--selected:hover {
+  background: var(--secondary-fixed);
+}
+
+.bouquet-type-card__icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.bouquet-type-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.bouquet-type-card__name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.bouquet-type-card__desc {
+  color: var(--outline);
+}
+
+.bouquet-type-card__check {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  animation: scaleIn var(--duration-fast) var(--ease-out) both;
+}
+
+@media (max-width: 600px) {
+  .bouquet-type-card {
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-4);
+  }
+  .bouquet-type-card__icon {
+    font-size: 2rem;
+  }
+}
