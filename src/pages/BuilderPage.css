@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .builder-page {
-  padding-top: 100px;
+  padding-top: clamp(80px, 12vw, 100px);
   padding-bottom: var(--space-8);
   min-height: 100vh;
   display: flex;
@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  margin-bottom: var(--space-10);
+  margin-bottom: clamp(var(--space-6), 4vw, var(--space-10));
 }
 
 .builder-page__title-row {
@@ -43,19 +43,23 @@
   flex: 1;
 }
 
-/* Flower Grid */
+/* Flower Grid — auto-fit for natural wrapping */
 .flower-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
+  gap: clamp(var(--space-3), 2vw, var(--space-5));
 }
 
-/* Split layout */
+/* Split layout — wraps naturally on small screens */
 .builder-page__split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
-  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(var(--space-6), 4vw, var(--space-12));
+}
+
+.builder-page__split > * {
+  flex: 1 1 300px;
+  min-width: 0;
 }
 
 .builder-page__options {
@@ -89,7 +93,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: var(--space-10);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding-top: clamp(var(--space-6), 4vw, var(--space-10));
   margin-top: auto;
 }
 
@@ -122,6 +128,7 @@
   padding: var(--space-4);
   outline: none;
   transition: border-color var(--duration-fast) ease;
+  width: 100%;
 }
 
 .note-form__input:focus,
@@ -146,29 +153,12 @@
   top: 100px;
 }
 
-/* ── Responsive ── */
-@media (max-width: 900px) {
-  .flower-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
-  }
-  .builder-page__split {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
-  .builder-page__preview,
-  .note-form__preview {
-    position: static;
-    justify-content: center;
-  }
+/* ── Write Note — editable card centered ── */
+.write-note__card-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-8) 0;
+  max-width: min(500px, 95vw);
+  margin: 0 auto;
 }
 
-@media (max-width: 500px) {
-  .flower-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-3);
-  }
-  .builder-page {
-    padding-top: 80px;
-  }
-}

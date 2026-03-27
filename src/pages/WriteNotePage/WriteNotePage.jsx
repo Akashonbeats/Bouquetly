@@ -27,60 +27,18 @@ export default function WriteNotePage() {
       <div className="builder-page__header container">
         <StepIndicator current={3} />
         <h1 className="display-sm">Write your note.</h1>
+        <p className="body-sm" style={{ color: 'var(--outline)' }}>
+          Click on the card below to personalize your message.
+        </p>
       </div>
 
       <div className="builder-page__content container">
-        <div className="builder-page__split builder-page__split--note">
-          <div className="note-form animate-fade-in-up">
-            <div className="note-form__field">
-              <label className="label-sm" htmlFor="note-to">To</label>
-              <input
-                id="note-to"
-                type="text"
-                className="note-form__input"
-                placeholder="Who is this bouquet for?"
-                value={note.to}
-                onChange={(e) => handleChange('to', e.target.value)}
-                maxLength={50}
-              />
-            </div>
-
-            <div className="note-form__field">
-              <label className="label-sm" htmlFor="note-message">Message</label>
-              <textarea
-                id="note-message"
-                className="note-form__textarea"
-                placeholder="Write a heartfelt message..."
-                value={note.message}
-                onChange={(e) => handleChange('message', e.target.value)}
-                rows={5}
-                maxLength={300}
-              />
-              <span className="note-form__charcount body-sm">
-                {note.message.length} / 300
-              </span>
-            </div>
-
-            <div className="note-form__field">
-              <label className="label-sm" htmlFor="note-from">From</label>
-              <input
-                id="note-from"
-                type="text"
-                className="note-form__input"
-                placeholder="Your name"
-                value={note.from}
-                onChange={(e) => handleChange('from', e.target.value)}
-                maxLength={50}
-              />
-            </div>
-          </div>
-
-          <div className="note-form__preview animate-fade-in">
-            <span className="label-sm" style={{ color: 'var(--outline)', marginBottom: 'var(--space-4)', display: 'block' }}>
-              Card Preview
-            </span>
-            <NoteCardPreview note={note} />
-          </div>
+        <div className="write-note__card-wrapper animate-fade-in-up">
+          <NoteCardPreview
+            note={note}
+            editable={true}
+            onChange={handleChange}
+          />
         </div>
       </div>
 

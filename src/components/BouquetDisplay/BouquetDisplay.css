@@ -5,13 +5,13 @@
 }
 
 .bouquet-display--large .bouquet-display__canvas {
-  width: 400px;
-  height: 460px;
+  width: min(400px, 85vw);
+  height: min(460px, 100vw);
 }
 
 .bouquet-display--small .bouquet-display__canvas {
-  width: 260px;
-  height: 300px;
+  width: min(260px, 70vw);
+  height: min(300px, 80vw);
 }
 
 .bouquet-display__canvas {
@@ -48,26 +48,19 @@
   pointer-events: none;
   user-select: none;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
-  transition: transform 0.4s var(--ease-out);
-}
-
-/* Subtle gentle animation */
-.bouquet-display__flower:nth-child(odd) {
-  animation: flowerSway 7s ease-in-out infinite;
-}
-
-.bouquet-display__flower:nth-child(even) {
-  animation: flowerSway 8s ease-in-out infinite reverse;
+  animation-name: flowerSway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  /* duration, delay, direction set per-flower via inline style */
 }
 
 @keyframes flowerSway {
-  0%, 100% { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08)); }
-  50% { filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1)); transform: translate(-50%, -50%) translateY(-2px); }
-}
-
-@media (max-width: 600px) {
-  .bouquet-display--large .bouquet-display__canvas {
-    width: 300px;
-    height: 340px;
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-3px);
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
   }
 }

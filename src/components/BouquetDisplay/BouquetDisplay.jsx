@@ -96,6 +96,8 @@ export default function BouquetDisplay({ selectedFlowers, bouquetType, size = 'l
         {/* Layer 2: Flower images — centered within the bush */}
         {flowers.map((flower, i) => {
           const pos = positions[i] || { x: 50, y: 40, scale: 1, rotate: 0 };
+          const duration = 6 + (i % 4) * 0.9; // 6s, 6.9s, 7.8s, 8.7s — varied
+          const delay = i * 0.8; // staggered start
           return (
             <img
               key={flower.id}
@@ -110,6 +112,9 @@ export default function BouquetDisplay({ selectedFlowers, bouquetType, size = 'l
                 top: `${pos.y}%`,
                 transform: `translate(-50%, -50%) scale(${pos.scale}) rotate(${pos.rotate}deg)`,
                 zIndex: 2 + i,
+                animationDuration: `${duration}s`,
+                animationDelay: `${delay}s`,
+                animationDirection: i % 2 === 0 ? 'normal' : 'reverse',
               }}
             />
           );

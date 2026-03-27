@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-6) var(--space-4) var(--space-5);
+  padding: clamp(var(--space-4), 3vw, var(--space-6)) clamp(var(--space-3), 2vw, var(--space-4)) clamp(var(--space-3), 2vw, var(--space-5));
   background: var(--surface-container-lowest);
   border: 2px solid transparent;
   border-radius: var(--radius-lg);
@@ -42,8 +42,8 @@
 }
 
 .flower-card__illustration {
-  width: 100px;
-  height: 100px;
+  width: clamp(90px, 15vw, 130px);
+  height: clamp(90px, 15vw, 130px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,14 +69,14 @@
 
 .flower-card__name {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
   font-weight: 600;
   color: var(--on-surface);
 }
 
 .flower-card__meaning {
   color: var(--outline);
-  font-size: 0.7rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.7rem);
 }
 
 .flower-card__check {
