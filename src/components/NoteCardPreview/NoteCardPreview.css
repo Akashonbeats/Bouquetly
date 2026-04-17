@@ -1,30 +1,30 @@
 .note-card-preview {
   perspective: 800px;
+  width: 100%;
 }
 
 .note-card-preview__inner {
   background: var(--surface-container-lowest);
   border-radius: var(--radius-lg);
   padding: clamp(var(--space-6), 4vw, var(--space-10)) clamp(var(--space-5), 3vw, var(--space-8));
-  min-height: 280px;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-5);
   box-shadow:
     0 8px 40px rgba(129, 81, 90, 0.08),
-    0 20px 60px rgba(0, 0, 0, 0.06);
+    0 20px 60px rgba(0, 0, 0, 0.05);
   position: relative;
   overflow: hidden;
-  /* Authentic gift-card tilt */
   transform: rotate(-2deg);
-  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .note-card-preview__inner:hover {
-  transform: rotate(-1deg) translateY(-4px);
+  transform: rotate(-1deg) translateY(-5px) scale(1.01);
   box-shadow:
-    0 12px 50px rgba(129, 81, 90, 0.1),
-    0 30px 80px rgba(0, 0, 0, 0.08);
+    0 16px 60px rgba(129, 81, 90, 0.12),
+    0 32px 80px rgba(0, 0, 0, 0.08);
 }
 
 .note-card-preview__inner::before {
@@ -33,7 +33,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg, var(--primary), var(--primary-container), var(--secondary-container));
 }
 
@@ -42,11 +42,11 @@
 }
 
 .note-card-preview__flourish {
-  font-size: 1.5rem;
-  opacity: 0.4;
+  font-size: 1.3rem;
+  opacity: 0.35;
 }
 
-/* TO line — label + inline input on same row */
+/* TO line */
 .note-card-preview__to-line {
   display: flex;
   align-items: baseline;
@@ -56,44 +56,44 @@
 }
 
 .note-card-preview__to-label {
+  font-family: var(--font-cursive);
   color: var(--on-surface);
-  font-style: italic;
 }
 
 .note-card-preview__to {
+  font-family: var(--font-cursive);
   color: var(--primary);
-  font-style: italic;
 }
 
 .note-card-preview__body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
   text-align: center;
   align-items: center;
 }
 
 .note-card-preview__message {
   color: var(--on-surface);
-  max-width: 36ch;
+  max-width: 32ch;
   margin: 0 auto;
   white-space: pre-wrap;
   word-break: break-word;
+  font-size: 0.9rem;
 }
 
-/* Inline inputs — blend into the card */
+/* Inline inputs */
 .note-card-preview__inline-input {
   border: none;
   border-bottom: 1.5px dashed var(--outline-variant);
   background: transparent;
   color: var(--primary);
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-cursive);
   text-align: center;
   outline: none;
   padding: var(--space-1) var(--space-2);
-  min-width: 120px;
+  min-width: 100px;
   max-width: 100%;
   transition: border-color 0.3s ease;
 }
@@ -104,8 +104,7 @@
 
 .note-card-preview__inline-input::placeholder {
   color: var(--outline-variant);
-  font-style: italic;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .note-card-preview__inline-input--to {
@@ -114,26 +113,26 @@
 }
 
 .note-card-preview__inline-input--from {
-  font-family: var(--font-display);
+  font-family: var(--font-cursive);
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--on-surface);
 }
 
-/* Inline textarea — blend into the card */
+/* Inline textarea */
 .note-card-preview__inline-textarea {
   border: none;
   border-bottom: 1.5px dashed var(--outline-variant);
   background: transparent;
   color: var(--on-surface);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   text-align: center;
   outline: none;
   padding: var(--space-2);
   width: 100%;
-  max-width: 36ch;
+  max-width: 32ch;
   resize: none;
   transition: border-color 0.3s ease;
 }
@@ -144,20 +143,20 @@
 
 .note-card-preview__inline-textarea::placeholder {
   color: var(--outline-variant);
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .note-card-preview__charcount {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--outline);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 /* Footer */
 .note-card-preview__footer {
   text-align: center;
-  padding-top: var(--space-4);
-  border-top: 1px solid rgba(213, 194, 196, 0.2);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(213, 194, 196, 0.15);
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -166,24 +165,22 @@
 }
 
 .note-card-preview__from-label {
-  font-family: var(--font-display);
+  font-family: var(--font-cursive);
   font-size: 0.95rem;
   color: var(--outline);
-  font-style: italic;
 }
 
 .note-card-preview__from-name {
-  font-family: var(--font-display);
+  font-family: var(--font-cursive);
   font-size: 0.95rem;
   color: var(--on-surface);
   font-weight: 600;
 }
 
 .note-card-preview__from {
-  font-family: var(--font-display);
+  font-family: var(--font-cursive);
   font-size: 0.95rem;
   color: var(--outline);
-  font-style: italic;
 }
 
 .note-card-preview__from span {

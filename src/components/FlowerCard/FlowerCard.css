@@ -3,22 +3,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  padding: clamp(var(--space-4), 3vw, var(--space-6)) clamp(var(--space-3), 2vw, var(--space-4)) clamp(var(--space-3), 2vw, var(--space-5));
-  background: var(--surface-container-lowest);
-  border: 2px solid transparent;
+  gap: var(--space-2);
+  padding: clamp(var(--space-3), 2vw, var(--space-4));
+  /* Glassmorphic */
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: inherit;
   text-align: center;
   outline: none;
+  will-change: transform;
 }
 
 .flower-card:hover:not(.flower-card--disabled) {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(129, 81, 90, 0.08);
-  background: var(--surface-container-lowest);
+  transform: translateY(-4px) scale(1.03);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 12px 40px rgba(129, 81, 90, 0.1);
+}
+
+.flower-card:active:not(.flower-card--disabled) {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
 }
 
 .flower-card:focus-visible {
@@ -26,24 +35,23 @@
 }
 
 .flower-card--selected {
-  border-color: var(--primary);
-  background: var(--primary-fixed);
-  box-shadow: 0 8px 32px rgba(129, 81, 90, 0.12);
+  background: rgba(129, 81, 90, 0.1);
+  border-color: var(--primary-fixed-dim);
+  box-shadow: 0 4px 20px rgba(129, 81, 90, 0.12);
 }
 
 .flower-card--selected:hover {
-  border-color: var(--primary);
-  background: var(--primary-fixed);
+  background: rgba(129, 81, 90, 0.12);
 }
 
 .flower-card--disabled {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
 .flower-card__illustration {
-  width: clamp(90px, 15vw, 130px);
-  height: clamp(90px, 15vw, 130px);
+  width: clamp(70px, 12vw, 100px);
+  height: clamp(70px, 12vw, 100px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,30 +66,31 @@
 }
 
 .flower-card:hover:not(.flower-card--disabled) .flower-card__illustration {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .flower-card__info {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .flower-card__name {
-  font-family: var(--font-display);
-  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  font-family: var(--font-cursive);
+  font-size: clamp(0.85rem, 2vw, 1rem);
   font-weight: 600;
   color: var(--on-surface);
 }
 
 .flower-card__meaning {
   color: var(--outline);
-  font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+  font-size: 0.6rem;
+  letter-spacing: 0.03em;
 }
 
 .flower-card__check {
   position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
+  top: var(--space-2);
+  right: var(--space-2);
   animation: scaleIn var(--duration-fast) var(--ease-out) both;
 }

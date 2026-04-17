@@ -5,18 +5,14 @@ export default function Header() {
   const location = useLocation();
   const isLanding = location.pathname === '/';
 
+  // On landing page, header is hidden (logo is in the hero)
+  if (isLanding) return null;
+
   return (
-    <header className={`header ${isLanding ? 'header--transparent' : ''}`}>
-      <div className="header__inner container">
-        <Link to="/" className="header__logo">
-          Bouquetly
-        </Link>
-        <nav className="header__nav">
-          <Link to="/build/flowers" className="header__link">Build</Link>
-          <Link to="/" className="header__link">Gallery</Link>
-          <Link to="/" className="header__link">About</Link>
-        </nav>
-      </div>
+    <header className="header">
+      <Link to="/" className="header__logo">
+        Bouquetly
+      </Link>
     </header>
   );
 }

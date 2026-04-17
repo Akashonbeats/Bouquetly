@@ -6,6 +6,40 @@ import NoteCardPreview from '../../components/NoteCardPreview/NoteCardPreview';
 import './GiftPage.css';
 import { useState } from 'react';
 
+/* Curvy ornament SVG — old-book style flourish */
+const Flourish = ({ className = '' }) => (
+  <svg className={`flourish ${className}`} viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M0 10 Q25 0 50 10 T100 10 T150 10 T200 10"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+      fill="none"
+    />
+  </svg>
+);
+
+/* Corner ornament — decorative curl */
+const CornerOrnament = ({ className = '' }) => (
+  <svg className={`corner-ornament ${className}`} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M5 55 Q5 30 15 20 Q25 10 40 8 Q50 7 55 5"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+      fill="none"
+    />
+    <path
+      d="M10 55 Q10 35 18 25 Q26 15 38 13"
+      stroke="currentColor"
+      strokeWidth="0.6"
+      strokeLinecap="round"
+      fill="none"
+      opacity="0.5"
+    />
+  </svg>
+);
+
 export default function GiftPage() {
   const { id } = useParams();
   const [copied, setCopied] = useState(false);
@@ -13,16 +47,14 @@ export default function GiftPage() {
 
   if (!data) {
     return (
-      <div className="gift-page gift-page--error container">
-        <h1 className="display-sm">This bouquet couldn't be found</h1>
-        <p className="body-md">The link may be invalid or expired.</p>
-        <Link to="/" className="btn btn-primary">Go Home</Link>
+      <div className="gift-page gift-page--error">
+        <h1 className="display-sm">couldn't find this bouquet</h1>
+        <Link to="/" className="btn btn-primary">go home</Link>
       </div>
     );
   }
 
   const { selectedFlowers, bouquetType, note } = data;
-  const flowers = selectedFlowers.map(id => getFlowerById(id)).filter(Boolean);
 
   const handleCopy = async () => {
     try {
@@ -43,64 +75,48 @@ export default function GiftPage() {
 
   return (
     <div className="gift-page">
-      {/* Floating petals */}
-      <div className="gift-page__petals">
-        {flowers.slice(0, 4).map((flower, i) => (
-          <div key={flower.id} className={`gift-page__floating-petal gift-page__floating-petal--${i + 1}`}>
-            <img src={flower.image} alt={flower.name} style={{ width: 40, height: 40, objectFit: 'contain' }} draggable={false} />
-          </div>
-        ))}
-      </div>
+      {/* Corner ornaments */}
+      <CornerOrnament className="corner-ornament--tl" />
+      <CornerOrnament className="corner-ornament--tr" />
+      <CornerOrnament className="corner-ornament--bl" />
+      <CornerOrnament className="corner-ornament--br" />
 
       {/* Header */}
       <header className="gift-page__header">
         <Link to="/" className="gift-page__logo">Bouquetly</Link>
         <button className="btn btn-outline" onClick={handleCopy} id="share-btn">
-          {copied ? '✓ Copied!' : 'Share Link'}
+          {copied ? '✓ copied' : 'share'}
         </button>
       </header>
 
-      {/* Content */}
-      <div className="gift-page__content container">
-        <div className="gift-page__hero animate-fade-in-up">
-          <span className="label-sm" style={{ color: 'var(--outline)' }}>Your Digital Gift</span>
-          <h1 className="display-sm gift-page__dedication">
-            For my dearest {note.to || 'you'},<br />
-            <em>a garden that never fades.</em>
-          </h1>
-        </div>
+      {/* Dedication with flourishes */}
+      <div className="gift-page__dedication animate-fade-in-up">
+        <Flourish />
+        <h1 className="display-sm">
+          for {note.to || 'you'}
+        </h1>
+        <Flourish />
+      </div>
 
-        <div className="gift-page__bouquet animate-scale-in">
+      {/* Side-by-side gifts */}
+      <div className="gift-page__gifts animate-scale-in">
+        <div className="gift-page__bouquet">
           <BouquetDisplay
             selectedFlowers={selectedFlowers}
             bouquetType={bouquetType}
             size="large"
           />
         </div>
-
-        {/* Flower meanings */}
-        <div className="gift-page__meanings stagger">
-          {flowers.map(flower => (
-            <div key={flower.id} className="gift-page__meaning">
-              <img src={flower.image} alt={flower.name} style={{ width: 36, height: 36, objectFit: 'contain' }} draggable={false} />
-              <div>
-                <span className="label-md">{flower.name}</span>
-                <span className="body-sm" style={{ color: 'var(--outline)' }}>{flower.meaning}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Note Card */}
-        <div className="gift-page__note animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+        <div className="gift-page__card">
           <NoteCardPreview note={note} />
         </div>
       </div>
 
       {/* Footer */}
       <footer className="gift-page__footer">
-        <span className="body-sm" style={{ color: 'var(--outline)' }}>
-          Made with <Link to="/" style={{ color: 'var(--primary)' }}>Bouquetly</Link> Curated Atelier &copy; {new Date().getFullYear()}
+        <Flourish className="flourish--small" />
+        <span className="body-sm" style={{ color: 'var(--outline)', opacity: 0.6 }}>
+          <Link to="/" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Bouquetly</Link>
         </span>
       </footer>
     </div>

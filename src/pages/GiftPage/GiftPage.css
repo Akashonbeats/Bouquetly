@@ -1,8 +1,11 @@
 .gift-page {
   min-height: 100vh;
   min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
-  overflow: hidden;
+  z-index: 1;
   background: linear-gradient(
     175deg,
     var(--surface) 0%,
@@ -12,125 +15,107 @@
 }
 
 .gift-page--error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   gap: var(--space-6);
   text-align: center;
-  padding-top: var(--space-24);
 }
 
-/* Floating petals — hidden on narrow screens via scale */
-.gift-page__petals {
+/* ── Corner ornaments ── */
+.corner-ornament {
   position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+  width: 60px;
+  height: 60px;
+  color: var(--outline-variant);
+  opacity: 0.4;
+  z-index: 2;
 }
 
-.gift-page__floating-petal {
-  position: absolute;
-  opacity: 0.15;
-  animation: petalDrift 8s ease-in-out infinite;
+.corner-ornament--tl { top: 16px; left: 16px; }
+.corner-ornament--tr { top: 16px; right: 16px; transform: scaleX(-1); }
+.corner-ornament--bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+.corner-ornament--br { bottom: 16px; right: 16px; transform: scale(-1, -1); }
+
+/* ── Flourish dividers ── */
+.flourish {
+  width: clamp(120px, 20vw, 200px);
+  height: auto;
+  color: var(--outline-variant);
+  opacity: 0.45;
 }
 
-.gift-page__floating-petal--1 { top: 8%; right: 8%; animation-delay: 0s; }
-.gift-page__floating-petal--2 { top: 30%; left: 5%; animation-delay: 2s; }
-.gift-page__floating-petal--3 { bottom: 25%; right: 12%; animation-delay: 4s; }
-.gift-page__floating-petal--4 { bottom: 8%; left: 10%; animation-delay: 1s; }
+.flourish--small {
+  width: clamp(80px, 12vw, 140px);
+  margin-bottom: var(--space-2);
+}
 
-/* Header */
+/* ── Header ── */
 .gift-page__header {
-  position: relative;
-  z-index: 10;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: clamp(var(--space-4), 3vw, var(--space-6)) clamp(var(--space-4), 4vw, var(--space-8));
+  padding: clamp(var(--space-3), 2vw, var(--space-5)) clamp(var(--space-4), 3vw, var(--space-8));
+  flex-shrink: 0;
 }
 
 .gift-page__logo {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-family: var(--font-cursive);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
   font-weight: 600;
-  color: var(--on-surface);
+  color: var(--primary);
   text-decoration: none;
+  opacity: 0.7;
 }
 
-/* Content */
-.gift-page__content {
-  position: relative;
-  z-index: 2;
+.gift-page__logo:hover {
+  opacity: 1;
+}
+
+/* ── Dedication ── */
+.gift-page__dedication {
+  text-align: center;
+  padding: var(--space-2) var(--space-4);
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(var(--space-6), 4vw, var(--space-12));
-  padding: clamp(var(--space-6), 4vw, var(--space-10)) 0 clamp(var(--space-10), 6vw, var(--space-20));
+  gap: var(--space-2);
 }
 
-.gift-page__hero {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding: 0 var(--space-4);
-}
-
-.gift-page__dedication {
-  color: var(--on-surface);
-}
-
-.gift-page__dedication em {
+.gift-page__dedication h1 {
   color: var(--primary);
   font-style: italic;
 }
 
-/* Bouquet */
-.gift-page__bouquet {
-  padding: clamp(var(--space-4), 3vw, var(--space-8));
-  background: rgba(245, 245, 220, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: var(--radius-xl);
-  border: 1px solid rgba(213, 194, 196, 0.1);
-  max-width: 100%;
-}
-
-/* Flower meanings */
-.gift-page__meanings {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(var(--space-2), 2vw, var(--space-4));
-  max-width: min(700px, 95vw);
-}
-
-.gift-page__meaning {
+/* ── Side-by-side gifts ── */
+.gift-page__gifts {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-5);
-  background: var(--surface-container-lowest);
-  border-radius: var(--radius-full);
-  box-shadow: 0 2px 12px rgba(129, 81, 90, 0.04);
-}
-
-.gift-page__meaning div {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Note */
-.gift-page__note {
-  max-width: min(480px, 95vw);
+  justify-content: center;
+  gap: clamp(var(--space-6), 4vw, var(--space-12));
+  flex: 1;
+  padding: var(--space-4) clamp(var(--space-4), 3vw, var(--space-8));
+  flex-wrap: wrap;
+  max-width: 1100px;
   width: 100%;
 }
 
-/* Footer */
+.gift-page__bouquet {
+  flex-shrink: 0;
+}
+
+.gift-page__card {
+  flex: 0 1 400px;
+  min-width: min(340px, 90vw);
+}
+
+/* ── Footer ── */
 .gift-page__footer {
-  position: relative;
-  z-index: 2;
+  flex-shrink: 0;
   text-align: center;
-  padding: var(--space-8) var(--space-4);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
 }

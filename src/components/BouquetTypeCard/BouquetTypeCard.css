@@ -3,22 +3,31 @@
   display: flex;
   align-items: center;
   gap: clamp(var(--space-3), 2vw, var(--space-5));
-  padding: clamp(var(--space-4), 2vw, var(--space-6)) clamp(var(--space-4), 3vw, var(--space-8));
-  background: var(--surface-container-lowest);
-  border: 2px solid transparent;
+  padding: clamp(var(--space-3), 2vw, var(--space-5));
+  /* Glassmorphic */
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: inherit;
   text-align: left;
   width: 100%;
   outline: none;
+  will-change: transform;
 }
 
 .bouquet-type-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(59, 102, 99, 0.08);
-  background: var(--surface-container-lowest);
+  transform: translateY(-3px) scale(1.02);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 12px 36px rgba(59, 102, 99, 0.1);
+}
+
+.bouquet-type-card:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
 }
 
 .bouquet-type-card:focus-visible {
@@ -26,43 +35,53 @@
 }
 
 .bouquet-type-card--selected {
-  border-color: var(--secondary);
-  background: var(--secondary-fixed);
+  background: rgba(59, 102, 99, 0.08);
+  border-color: var(--secondary-fixed-dim);
 }
 
 .bouquet-type-card--selected:hover {
-  background: var(--secondary-fixed);
+  background: rgba(59, 102, 99, 0.1);
 }
 
-.bouquet-type-card__icon {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  line-height: 1;
+/* Bush image thumbnail */
+.bouquet-type-card__thumb {
+  width: clamp(50px, 8vw, 70px);
+  height: clamp(50px, 8vw, 70px);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bouquet-type-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .bouquet-type-card__info {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 2px;
   flex: 1;
   min-width: 0;
 }
 
 .bouquet-type-card__name {
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-family: var(--font-cursive);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: 600;
   color: var(--on-surface);
 }
 
 .bouquet-type-card__desc {
   color: var(--outline);
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
 }
 
 .bouquet-type-card__check {
   position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
+  top: var(--space-3);
+  right: var(--space-3);
   animation: scaleIn var(--duration-fast) var(--ease-out) both;
 }
