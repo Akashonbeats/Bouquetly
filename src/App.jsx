@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, useNavigationType, useLocation } from 'react-router-dom';
+import { useRef, useEffect } from 'react';
 import { BouquetProvider } from './context/BouquetContext';
 import { TransitionProvider, useTransitionCtx } from './context/TransitionContext';
 import { usePageReady } from './hooks/usePageReady';
@@ -32,18 +33,35 @@ function LoaderContent() {
  * depends only on phase. No overlay, no z-index battles.
  */
 function TransitionLayout() {
-  const { phase } = useTransitionCtx();
+  const { phase, direction, handlePopNavigation } = useTransitionCtx();
+  const navigationType = useNavigationType();
+  const location = useLocation();
   usePageReady();
+
+  // Track history index to detect back vs forward on browser POP
+  const prevHistoryIdx = useRef(window.history.state?.idx ?? 0);
+
+  useEffect(() => {
+    if (navigationType === 'POP') {
+      const currentIdx = window.history.state?.idx ?? 0;
+      const dir = currentIdx < prevHistoryIdx.current ? 'back' : 'forward';
+      prevHistoryIdx.current = currentIdx;
+      handlePopNavigation(dir);
+    } else {
+      // Keep idx in sync for programmatic navigations
+      prevHistoryIdx.current = window.history.state?.idx ?? 0;
+    }
+  // location.key changes on every navigation — use it as the trigger
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.key]);
 
   return (
     <div className="transition-wrapper">
-      {/* Loader: fades in during 'loading', invisible otherwise */}
       <div className={`transition-loader transition-loader--${phase}`}>
         <LoaderContent />
       </div>
 
-      {/* Page content: exits/enters with zoom+blur, hides during loading */}
-      <div className={`page-content page-content--${phase}`}>
+      <div className={`page-content page-content--${phase} page-content--${direction}`}>
         <Outlet />
       </div>
     </div>

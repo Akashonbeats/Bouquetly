@@ -1,28 +1,30 @@
 import { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { preloadAllImages } from '../utils/preloader';
 
 const TransitionContext = createContext(null);
 
 /**
- * Phase flow (navigation):
- *   idle → out (550ms: overlay fades in, page zooms+blurs)
- *        → loading (navigate, await images, min 450ms)
- *        → in (900ms: overlay fades out, page zooms-out unblurs)
- *        → idle
- *
- * On first load:
- *   starts in 'loading' until preloadAllImages() resolves, then → 'in' → 'idle'
+ * Linear flow order — used to auto-detect navigation direction.
+ * If the destination path is earlier in this list than the current path → 'back'.
+ * Paths not in this list (e.g. /bouquet/:id) are treated as beyond the end → always 'forward'.
  */
-export function TransitionProvider({ children }) {
-  // Start in 'loading' so the loader shows immediately on any page load
-  const [phase, setPhase] = useState('loading');
-  const rawNavigate = useNavigate();
-  const busy = useRef(false);
+const FLOW_ORDER = ['/', '/build/flowers', '/build/bouquet', '/build/note'];
 
-  // Preload all images the moment the app mounts.
-  // If already cached → resolves ~instantly, loader never visibly appears.
-  // If slow connection → loader shows naturally until done.
+function getFlowIdx(path) {
+  const idx = FLOW_ORDER.indexOf(path);
+  return idx === -1 ? FLOW_ORDER.length : idx;
+}
+
+export function TransitionProvider({ children }) {
+  const [phase, setPhase] = useState('loading');
+  const [direction, setDirection] = useState('forward');
+  const rawNavigate = useNavigate();
+  const location = useLocation();
+  const busy = useRef(false);
+  const isPopNav = useRef(false);
+
+  // Preload all images on mount
   useEffect(() => {
     preloadAllImages().then(() => {
       setPhase('in');
@@ -30,20 +32,50 @@ export function TransitionProvider({ children }) {
     });
   }, []);
 
-  const transitionTo = useCallback((to) => {
+  /**
+   * Programmatic navigation.
+   * Direction is auto-detected from the flow order — no need to pass it manually.
+   * You can still override with an explicit second argument if needed.
+   *
+   * @param {string} to - route path
+   * @param {'forward'|'back'} [dir] - optional override
+   */
+  const transitionTo = useCallback((to, dir) => {
     if (busy.current) return;
     busy.current = true;
 
+    // Auto-detect direction based on flow position
+    const resolvedDir = dir ?? (
+      getFlowIdx(to) < getFlowIdx(location.pathname) ? 'back' : 'forward'
+    );
+
+    setDirection(resolvedDir);
     setPhase('out');
 
     setTimeout(() => {
       rawNavigate(to);
       setPhase('loading');
     }, 550);
-  }, [rawNavigate]);
+  }, [rawNavigate, location.pathname]);
 
-  // Called by usePageReady when the new page's images are loaded
+  /**
+   * Called by TransitionLayout when the browser's back/forward button fires a POP.
+   */
+  const handlePopNavigation = useCallback((dir) => {
+    isPopNav.current = true;
+    setDirection(dir);
+    setPhase('loading');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setPhase('in');
+        isPopNav.current = false;
+        setTimeout(() => setPhase('idle'), 900);
+      });
+    });
+  }, []);
+
   const onPageReady = useCallback(() => {
+    if (isPopNav.current) return;
     setPhase('in');
     setTimeout(() => {
       setPhase('idle');
@@ -52,7 +84,7 @@ export function TransitionProvider({ children }) {
   }, []);
 
   return (
-    <TransitionContext.Provider value={{ phase, transitionTo, onPageReady }}>
+    <TransitionContext.Provider value={{ phase, direction, transitionTo, onPageReady, handlePopNavigation }}>
       {children}
     </TransitionContext.Provider>
   );

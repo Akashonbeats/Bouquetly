@@ -81,30 +81,52 @@
     opacity    0.55s cubic-bezier(0.4, 0, 1, 1);
 }
 
-/* Exit: zoom in + blur (old page leaves) */
-.page-content--out {
-  transform: scale(1.06);
+/* ── Exit animations ── */
+
+/* Forward exit: page lifts toward the user (zooms in) */
+.page-content--out.page-content--forward {
+  transform: scale(1.07);
   filter: blur(10px);
-  opacity: 0.35;
+  opacity: 0.3;
 }
 
-/* Loading: invisible — loader takes its place in the same grid cell */
+/* Back exit: page recedes away from the user (shrinks) */
+.page-content--out.page-content--back {
+  transform: scale(0.93);
+  filter: blur(10px);
+  opacity: 0.3;
+}
+
+/* Loading: invisible — loader takes its place */
 .page-content--loading {
   opacity: 0;
   pointer-events: none;
   transition: none;
 }
 
-/* Enter: new page springs in from slightly below/small */
-.page-content--in {
-  animation: pageEnter 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
+/* ── Enter animations ── */
+
+/* Forward enter: new page rises from behind (starts small) */
+.page-content--in.page-content--forward {
+  animation: pageEnterForward 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Back enter: previous page drops in from in front (starts large) */
+.page-content--in.page-content--back {
+  animation: pageEnterBack 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .page-content--idle {
   /* Fully visible, no transform */
 }
 
-@keyframes pageEnter {
-  0%   { transform: scale(0.96); filter: blur(10px); opacity: 0; }
+@keyframes pageEnterForward {
+  0%   { transform: scale(0.94); filter: blur(10px); opacity: 0; }
   100% { transform: scale(1);    filter: blur(0);    opacity: 1; }
 }
+
+@keyframes pageEnterBack {
+  0%   { transform: scale(1.06); filter: blur(10px); opacity: 0; }
+  100% { transform: scale(1);    filter: blur(0);    opacity: 1; }
+}
+
