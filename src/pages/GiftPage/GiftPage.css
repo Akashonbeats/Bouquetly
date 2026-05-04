@@ -6,12 +6,7 @@
   align-items: center;
   position: relative;
   z-index: 1;
-  background: linear-gradient(
-    175deg,
-    var(--surface) 0%,
-    var(--surface-container-low) 50%,
-    var(--primary-fixed) 100%
-  );
+  /* No background — uses global body gradient + FloatingPetals */
 }
 
 .gift-page--error {
@@ -19,21 +14,6 @@
   gap: var(--space-6);
   text-align: center;
 }
-
-/* ── Corner ornaments ── */
-.corner-ornament {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  color: var(--outline-variant);
-  opacity: 0.4;
-  z-index: 2;
-}
-
-.corner-ornament--tl { top: 16px; left: 16px; }
-.corner-ornament--tr { top: 16px; right: 16px; transform: scaleX(-1); }
-.corner-ornament--bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
-.corner-ornament--br { bottom: 16px; right: 16px; transform: scale(-1, -1); }
 
 /* ── Flourish dividers ── */
 .flourish {
@@ -65,6 +45,7 @@
   color: var(--primary);
   text-decoration: none;
   opacity: 0.7;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gift-page__logo:hover {

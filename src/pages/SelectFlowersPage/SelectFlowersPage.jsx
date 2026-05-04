@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useTransitionNavigate } from '../../hooks/useTransitionNavigate';
 import { useBouquet, useBouquetDispatch } from '../../context/BouquetContext';
 import { FLOWERS } from '../../utils/flowers';
 import FlowerCard from '../../components/FlowerCard/FlowerCard';
@@ -10,7 +10,7 @@ const MAX_FLOWERS = 7;
 export default function SelectFlowersPage() {
   const { selectedFlowers } = useBouquet();
   const dispatch = useBouquetDispatch();
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
 
   const canProceed = selectedFlowers.length >= MIN_FLOWERS;
   const atMax = selectedFlowers.length >= MAX_FLOWERS;
@@ -21,7 +21,7 @@ export default function SelectFlowersPage() {
 
   return (
     <div className="builder-page">
-      <div className="builder-page__header container">
+      <div className="builder-page__body">
         <div className="builder-page__title-row">
           <h1 className="display-sm">pick your blooms</h1>
           <span className="body-sm builder-page__counter">
@@ -31,9 +31,7 @@ export default function SelectFlowersPage() {
             )}
           </span>
         </div>
-      </div>
 
-      <div className="builder-page__content container">
         <div className="flower-grid stagger">
           {FLOWERS.map(flower => (
             <FlowerCard

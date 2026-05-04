@@ -93,12 +93,19 @@
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  scrollbar-gutter: stable; /* always reserve space — prevents fixed-element shift */
 }
 
 body {
   font-family: var(--font-body);
   color: var(--on-surface);
-  background: var(--surface);
+  background: linear-gradient(
+    170deg,
+    var(--surface) 0%,
+    var(--surface-container-low) 45%,
+    var(--primary-fixed) 100%
+  );
+  background-attachment: fixed;
   line-height: 1.6;
   min-height: 100vh;
   min-height: 100dvh;
@@ -110,6 +117,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+
+
 
 /* ── Typography — Cursive First ── */
 h1, h2, h3, h4, h5, h6 {
@@ -169,6 +179,18 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.05em;
+}
+
+/* ── Unstyled button reset ── */
+.btn-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 /* ── Buttons ── */
@@ -308,6 +330,28 @@ h1, h2, h3, h4, h5, h6 {
 /* Stagger children — Apple-style blur+scale reveal */
 .stagger > * {
   animation: appleReveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/**
+ * Glass cards (.flower-card, .bouquet-type-card) use backdrop-filter.
+ * backdrop-filter breaks when the element itself animates `filter`.
+ * Override: use cardReveal which has NO filter — only opacity + transform.
+ */
+.stagger > .flower-card,
+.stagger > .bouquet-type-card {
+  animation: cardReveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+    /* No filter here — preserves backdrop-filter throughout */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 .stagger > *:nth-child(1)  { animation-delay: 0ms; }
 .stagger > *:nth-child(2)  { animation-delay: 80ms; }

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useTransitionNavigate } from '../../hooks/useTransitionNavigate';
 import { useBouquet, useBouquetDispatch } from '../../context/BouquetContext';
 import { BOUQUET_TYPES } from '../../utils/flowers';
 import BouquetTypeCard from '../../components/BouquetTypeCard/BouquetTypeCard';
@@ -8,7 +8,7 @@ import '../BuilderPage.css';
 export default function SelectBouquetPage() {
   const { bouquetType, selectedFlowers } = useBouquet();
   const dispatch = useBouquetDispatch();
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
 
   const handleSelect = (id) => {
     dispatch({ type: 'SET_BOUQUET_TYPE', payload: id });
@@ -16,11 +16,9 @@ export default function SelectBouquetPage() {
 
   return (
     <div className="builder-page">
-      <div className="builder-page__header container">
+      <div className="builder-page__body">
         <h1 className="display-sm">choose your greenery</h1>
-      </div>
 
-      <div className="builder-page__content container">
         <div className="builder-page__split">
           <div className="builder-page__options stagger">
             {BOUQUET_TYPES.map(type => (

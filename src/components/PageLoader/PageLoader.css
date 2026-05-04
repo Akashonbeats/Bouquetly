@@ -1,0 +1,104 @@
+/* ══════════════════════════════════════════════════════
+   PageLoader — Full-screen transition overlay
+   ══════════════════════════════════════════════════════ */
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  /* Own GPU compositing layer — never shifts */
+  transform: translateZ(0);
+  will-change: opacity;
+
+  background: linear-gradient(
+    170deg,
+    var(--surface) 0%,
+    var(--surface-container-low) 45%,
+    var(--primary-fixed) 100%
+  );
+
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-loader--out {
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-loader--loading {
+  opacity: 1;
+  pointer-events: all;
+  transition: none;
+}
+
+.page-loader--in {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-loader--idle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Center content ── */
+.page-loader__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  /* One-shot appleReveal entrance — same as the rest of the app */
+  animation: appleReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Cursive logo — static, no looping movement */
+.page-loader__logo {
+  font-family: var(--font-cursive);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+  /* No animation here — the parent handles the entrance */
+}
+
+/* ── Three wave dots — scale-only, no Y movement so container stays stable ── */
+.page-loader__dots {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  height: 14px; /* Fixed height so dots can't shift the layout */
+}
+
+.page-loader__dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  opacity: 0.35;
+  animation: loaderDot 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  /* Scale-only: no translateY, no layout shift */
+  transform-origin: center;
+}
+
+.page-loader__dots span:nth-child(1) { animation-delay: 0s; }
+.page-loader__dots span:nth-child(2) { animation-delay: 0.2s; }
+.page-loader__dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes loaderDot {
+  0%, 60%, 100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  30% {
+    transform: scale(1.7);
+    opacity: 1;
+  }
+}

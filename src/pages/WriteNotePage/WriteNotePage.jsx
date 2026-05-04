@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useTransitionNavigate } from '../../hooks/useTransitionNavigate';
 import { useBouquet, useBouquetDispatch } from '../../context/BouquetContext';
 import { encodeBouquet } from '../../utils/bouquetEncoder';
 import NoteCardPreview from '../../components/NoteCardPreview/NoteCardPreview';
@@ -7,7 +7,7 @@ import '../BuilderPage.css';
 export default function WriteNotePage() {
   const state = useBouquet();
   const dispatch = useBouquetDispatch();
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
 
   const { note } = state;
   const canCreate = note.to.trim() && note.from.trim() && note.message.trim();
@@ -23,12 +23,10 @@ export default function WriteNotePage() {
 
   return (
     <div className="builder-page">
-      <div className="builder-page__header container">
+      <div className="builder-page__body">
         <h1 className="display-sm">write your note</h1>
-      </div>
 
-      <div className="builder-page__content container">
-        <div className="write-note__card-wrapper animate-fade-in-up">
+        <div className="write-note__card-wrapper animate-scale-in">
           <NoteCardPreview
             note={note}
             editable={true}

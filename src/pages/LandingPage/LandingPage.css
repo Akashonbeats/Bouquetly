@@ -6,15 +6,9 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(
-    170deg,
-    var(--surface) 0%,
-    var(--surface-container-low) 40%,
-    var(--primary-fixed) 100%
-  );
+  /* No background — uses global body gradient so petals show through */
 }
 
-/* Centered content */
 .landing__center {
   position: relative;
   z-index: 2;
@@ -28,7 +22,6 @@
 
 .landing__title {
   color: var(--primary);
-  /* Apple-style scale reveal */
   animation: appleHeroReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -43,7 +36,6 @@
   margin-top: var(--space-4);
 }
 
-/* ── Apple-style hero reveal ── */
 @keyframes appleHeroReveal {
   0% {
     opacity: 0;
