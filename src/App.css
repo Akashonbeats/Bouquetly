@@ -73,6 +73,8 @@
 .page-content {
   display: flex;
   flex-direction: column;
+  flex: 1; /* grows to fill space, but can stretch past if content is taller */
+  /* removed height: 100% and overflow: hidden so content isn't clipped vertically */
   will-change: transform, filter, opacity;
   transform-origin: center center;
   transition:
@@ -114,10 +116,6 @@
 /* Back enter: previous page drops in from in front (starts large) */
 .page-content--in.page-content--back {
   animation: pageEnterBack 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.page-content--idle {
-  /* Fully visible, no transform */
 }
 
 @keyframes pageEnterForward {

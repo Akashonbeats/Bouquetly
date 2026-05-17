@@ -83,46 +83,66 @@
   font-size: 0.9rem;
 }
 
-/* Inline inputs */
+/* ── Editable fields — match read-only text exactly (WYSIWYG) ── */
+
+/* Base: no border, no background, left-aligned to read inline with label */
 .note-card-preview__inline-input {
   border: none;
-  border-bottom: 1.5px dashed var(--outline-variant);
   background: transparent;
   color: var(--primary);
   font-family: var(--font-cursive);
-  text-align: center;
+  text-align: left;
   outline: none;
-  padding: var(--space-1) var(--space-2);
-  min-width: 100px;
+  padding: 2px 0;
+  margin-left: 5px;
+  min-width: 40px;
   max-width: 100%;
-  transition: border-color 0.3s ease;
-}
-
-.note-card-preview__inline-input:focus {
-  border-bottom-color: var(--primary);
+  border-radius: var(--radius-sm);
+  caret-color: var(--primary);
+  /* No hover/focus background — invisible until typed into */
 }
 
 .note-card-preview__inline-input::placeholder {
   color: var(--outline-variant);
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
+/* "To" input — mirrors .note-card-preview__to (headline-md, cursive, primary) */
 .note-card-preview__inline-input--to {
   font-size: inherit;
   font-weight: inherit;
 }
 
+/* "From" input — mirrors .note-card-preview__from-name, left-aligned */
 .note-card-preview__inline-input--from {
   font-family: var(--font-cursive);
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--on-surface);
+  caret-color: var(--on-surface);
+  text-align: left;
 }
 
-/* Inline textarea */
+/* ── Growing input wrapper — lets the input shrink/grow with content ── */
+.growing-input-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+/* Hidden mirror span — same font as the input, used only for width measurement */
+.growing-input__sizer {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;      /* preserve spaces so width matches exactly */
+  pointer-events: none;
+  left: 0;
+  top: 0;
+}
+
+/* Textarea — mirrors .note-card-preview__message exactly */
 .note-card-preview__inline-textarea {
   border: none;
-  border-bottom: 1.5px dashed var(--outline-variant);
   background: transparent;
   color: var(--on-surface);
   font-family: var(--font-body);
@@ -130,20 +150,22 @@
   line-height: 1.6;
   text-align: center;
   outline: none;
-  padding: var(--space-2);
+  padding: 2px var(--space-2);
   width: 100%;
   max-width: 32ch;
   resize: none;
-  transition: border-color 0.3s ease;
+  overflow: hidden;       /* hides scrollbar while JS resizes height */
+  box-sizing: border-box;
+  border-radius: var(--radius-sm);
+  caret-color: var(--on-surface);
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-.note-card-preview__inline-textarea:focus {
-  border-bottom-color: var(--primary);
-}
 
 .note-card-preview__inline-textarea::placeholder {
   color: var(--outline-variant);
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .note-card-preview__charcount {
@@ -173,17 +195,6 @@
 .note-card-preview__from-name {
   font-family: var(--font-cursive);
   font-size: 0.95rem;
-  color: var(--on-surface);
-  font-weight: 600;
-}
-
-.note-card-preview__from {
-  font-family: var(--font-cursive);
-  font-size: 0.95rem;
-  color: var(--outline);
-}
-
-.note-card-preview__from span {
   color: var(--on-surface);
   font-weight: 600;
 }

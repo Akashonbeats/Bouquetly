@@ -3,6 +3,7 @@ import { useBouquet, useBouquetDispatch } from '../../context/BouquetContext';
 import { BOUQUET_TYPES } from '../../utils/flowers';
 import BouquetTypeCard from '../../components/BouquetTypeCard/BouquetTypeCard';
 import BouquetDisplay from '../../components/BouquetDisplay/BouquetDisplay';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import '../BuilderPage.css';
 
 export default function SelectBouquetPage() {
@@ -50,14 +51,16 @@ export default function SelectBouquetPage() {
       </div>
 
       <div className="builder-page__nav container">
-        <button className="btn btn-text" onClick={() => navigate('/build/flowers')}>← back</button>
+        <button className="btn btn-text" onClick={() => navigate('/build/flowers')}>
+          <ArrowLeft size={16} strokeWidth={2} /> back
+        </button>
         <button
           className="btn btn-primary"
           disabled={!bouquetType}
           onClick={() => navigate('/build/note')}
           id="next-to-note"
         >
-          next →
+          next <ArrowRight size={16} strokeWidth={2} />
         </button>
       </div>
     </div>

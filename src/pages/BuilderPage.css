@@ -3,26 +3,27 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .builder-page {
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: clamp(var(--space-16), 8vw, var(--space-20)) 0 var(--space-6);
-  overflow: auto;
+  /* Top padding clears the fixed header; keep side padding at 0 so body controls it */
+  padding: clamp(var(--space-12), 8vw, var(--space-16)) 0 var(--space-4);
   position: relative;
   z-index: 1;
 }
 
-/* Single body block — heading grouped with cards, centered as one unit */
+/* Body fills remaining space — no auto margins, no competing gaps */
 .builder-page__body {
-  margin: auto 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center; /* vertically centers content within the body */
   gap: clamp(var(--space-3), 2vw, var(--space-5));
-  /* Full width with side padding — no max-width constraint */
   width: 100%;
-  padding: 0 clamp(var(--space-4), 3vw, var(--space-6));
+  padding: var(--space-3) clamp(var(--space-4), 3vw, var(--space-6)) var(--space-5);
   box-sizing: border-box;
+  /* Let it grow naturally, no internal scroll */
 }
 
 .builder-page__body h1 {
@@ -98,15 +99,14 @@
   opacity: 0.5;
 }
 
-/* Navigation */
+/* Navigation — sits at the bottom, no auto margin needed */
 .builder-page__nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-3);
-  padding-top: var(--space-4);
-  margin-top: auto;
+  padding: var(--space-3) clamp(var(--space-4), 3vw, var(--space-6));
   flex-shrink: 0;
 }
 
@@ -115,4 +115,8 @@
   max-width: min(480px, 95vw);
   margin: 0 auto;
   width: 100%;
+  /* Extra padding so the card's rotated box-shadow isn't clipped by the
+     overflow-y:auto on builder-page__body */
+  padding: var(--space-2) var(--space-4) var(--space-5);
+  box-sizing: border-box;
 }

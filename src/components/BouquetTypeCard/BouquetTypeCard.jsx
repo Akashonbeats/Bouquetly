@@ -1,3 +1,4 @@
+import { CircleCheck } from 'lucide-react';
 import './BouquetTypeCard.css';
 
 export default function BouquetTypeCard({ type, selected, onSelect }) {
@@ -17,10 +18,7 @@ export default function BouquetTypeCard({ type, selected, onSelect }) {
       </div>
       {selected && (
         <div className="bouquet-type-card__check">
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="10" fill="var(--secondary)" />
-            <path d="M6 10L9 13L14 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <CircleCheck size={18} strokeWidth={2} fill="var(--secondary)" color="white" />
         </div>
       )}
     </button>

@@ -2,6 +2,7 @@ import { useTransitionNavigate } from '../../hooks/useTransitionNavigate';
 import { useBouquet, useBouquetDispatch } from '../../context/BouquetContext';
 import { FLOWERS } from '../../utils/flowers';
 import FlowerCard from '../../components/FlowerCard/FlowerCard';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import '../BuilderPage.css';
 
 const MIN_FLOWERS = 4;
@@ -46,14 +47,16 @@ export default function SelectFlowersPage() {
       </div>
 
       <div className="builder-page__nav container">
-        <button className="btn btn-text" onClick={() => navigate('/')}>← back</button>
+        <button className="btn btn-text" onClick={() => navigate('/')}>
+          <ArrowLeft size={16} strokeWidth={2} /> back
+        </button>
         <button
           className="btn btn-primary"
           disabled={!canProceed}
           onClick={() => navigate('/build/bouquet')}
           id="next-to-bouquet"
         >
-          next →
+          next <ArrowRight size={16} strokeWidth={2} />
         </button>
       </div>
     </div>

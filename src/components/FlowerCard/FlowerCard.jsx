@@ -1,3 +1,4 @@
+import { CircleCheck } from 'lucide-react';
 import './FlowerCard.css';
 
 export default function FlowerCard({ flower, selected, onToggle, disabled }) {
@@ -23,10 +24,7 @@ export default function FlowerCard({ flower, selected, onToggle, disabled }) {
       </div>
       {selected && (
         <div className="flower-card__check">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="10" fill="var(--primary)" />
-            <path d="M6 10L9 13L14 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <CircleCheck size={20} strokeWidth={2} fill="var(--primary)" color="white" />
         </div>
       )}
     </button>

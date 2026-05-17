@@ -2,6 +2,7 @@ import { useTransitionNavigate } from '../../hooks/useTransitionNavigate';
 import { useBouquet, useBouquetDispatch } from '../../context/BouquetContext';
 import { encodeBouquet } from '../../utils/bouquetEncoder';
 import NoteCardPreview from '../../components/NoteCardPreview/NoteCardPreview';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import '../BuilderPage.css';
 
 export default function WriteNotePage() {
@@ -36,14 +37,16 @@ export default function WriteNotePage() {
       </div>
 
       <div className="builder-page__nav container">
-        <button className="btn btn-text" onClick={() => navigate('/build/bouquet')}>← back</button>
+        <button className="btn btn-text" onClick={() => navigate('/build/bouquet')}>
+          <ArrowLeft size={16} strokeWidth={2} /> back
+        </button>
         <button
           className="btn btn-primary"
           disabled={!canCreate}
           onClick={handleCreate}
           id="create-bouquet"
         >
-          create ✿
+          create <Sparkles size={15} strokeWidth={2} />
         </button>
       </div>
     </div>

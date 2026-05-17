@@ -3,6 +3,7 @@ import { useTransitionNavigate } from '../../hooks/useTransitionNavigate';
 import { decodeBouquet } from '../../utils/bouquetEncoder';
 import BouquetDisplay from '../../components/BouquetDisplay/BouquetDisplay';
 import NoteCardPreview from '../../components/NoteCardPreview/NoteCardPreview';
+import { Link2, Check } from 'lucide-react';
 import './GiftPage.css';
 import { useState } from 'react';
 
@@ -56,8 +57,11 @@ export default function GiftPage() {
     <div className="gift-page">
       <header className="gift-page__header">
         <button className="gift-page__logo btn-reset" onClick={() => navigate('/')}>Bouquetly</button>
-        <button className="btn btn-outline" onClick={handleCopy} id="share-btn">
-          {copied ? '✓ copied' : 'share'}
+        <button className="btn btn-outline gift-page__share-btn" onClick={handleCopy} id="share-btn">
+          {copied
+            ? <><Check size={14} strokeWidth={2.5} /> copied</>
+            : <><Link2 size={14} strokeWidth={2} /> share</>
+          }
         </button>
       </header>
 
@@ -82,14 +86,22 @@ export default function GiftPage() {
 
       <footer className="gift-page__footer">
         <Flourish className="flourish--small" />
-        <span className="body-sm" style={{ color: 'var(--outline)', opacity: 0.6 }}>
+        <span className="body-sm gift-page__footer-text">
           <button
-            className="btn-reset"
+            className="btn-reset gift-page__footer-brand"
             onClick={() => navigate('/')}
-            style={{ color: 'var(--primary)', cursor: 'pointer' }}
           >
             Bouquetly
-          </button>
+          </button>{' '}
+          by{' '}
+          <a
+            href="https://akashsampath.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gift-page__footer-author"
+          >
+            Akash Sampath
+          </a>
         </span>
       </footer>
     </div>

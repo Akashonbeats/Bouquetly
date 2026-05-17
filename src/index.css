@@ -93,7 +93,6 @@
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
-  scrollbar-gutter: stable; /* always reserve space — prevents fixed-element shift */
 }
 
 body {
