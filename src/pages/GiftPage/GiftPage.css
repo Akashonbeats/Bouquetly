@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: clamp(var(--space-3), 2vw, var(--space-5)) clamp(var(--space-4), 3vw, var(--space-8));
+  padding: calc(clamp(var(--space-3), 2vw, var(--space-5)) + env(safe-area-inset-top)) clamp(var(--space-4), 3vw, var(--space-8)) clamp(var(--space-3), 2vw, var(--space-5));
   flex-shrink: 0;
 }
 
@@ -93,7 +93,7 @@
 .gift-page__footer {
   flex-shrink: 0;
   text-align: center;
-  padding: var(--space-1) var(--space-3) var(--space-3);
+  padding: var(--space-1) var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   align-items: center;
