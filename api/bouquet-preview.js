@@ -4,6 +4,12 @@ import path from 'path';
 export default async function handler(req, res) {
   const { id } = req.query;
 
+  const protocol = req.headers['x-forwarded-proto'] || 'https';
+  const host = req.headers.host;
+  const ogImageUrl = id 
+    ? `${protocol}://${host}/api/bouquet-image?id=${id}` 
+    : `${protocol}://${host}/api/bouquet-image`;
+
   // 1. Decode the from name from the URL ID
   let fromName = '';
   try {
@@ -38,8 +44,6 @@ export default async function handler(req, res) {
        htmlData = fs.readFileSync(htmlPath, 'utf8');
     } else {
        // Fallback for strict serverless environments: fetch from our own host
-       const protocol = req.headers['x-forwarded-proto'] || 'https';
-       const host = req.headers.host;
        const response = await fetch(`${protocol}://${host}/index.html`);
        htmlData = await response.text();
     }
@@ -63,6 +67,16 @@ export default async function handler(req, res) {
     htmlData = htmlData.replace(
       /<meta property="og:description" content=".*?"\s*\/>/i,
       `<meta property="og:description" content="${dynamicDescription}" />`
+    );
+
+    // Replace the default og:image and twitter:image tags with the dynamic ones
+    htmlData = htmlData.replace(
+      /<meta property="og:image" content=".*?"\s*\/>/i,
+      `<meta property="og:image" content="${ogImageUrl}" />`
+    );
+    htmlData = htmlData.replace(
+      /<meta name="twitter:image" content=".*?"\s*\/>/i,
+      `<meta name="twitter:image" content="${ogImageUrl}" />`
     );
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
