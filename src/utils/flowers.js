@@ -26,7 +26,7 @@ export const FLOWERS = [
   { id: 'sunflower',   name: 'Sunflower',   meaning: 'Pure Thoughts',     image: sunflowerImg },
   { id: 'carnation',   name: 'Carnation',   meaning: 'Fascination',       image: carnationImg },
   { id: 'daisy',       name: 'Daisy',       meaning: 'Innocence',         image: daisyImg },
-  { id: 'peony',       name: 'Peony',       meaning: 'Happy Marriage',    image: peonyImg },
+  { id: 'peony',       name: 'Peony',       meaning: 'Happy & Calm',      image: peonyImg },
   { id: 'rose',        name: 'Rose',        meaning: 'Enduring Passion',  image: roseImg },
   { id: 'anemone',     name: 'Anemone',     meaning: 'Expectation',       image: anemoneImg },
   { id: 'dahlia',      name: 'Dahlia',      meaning: 'Elegance & Grace',  image: dahliaSrc },
