@@ -7,19 +7,27 @@ const initialState = {
   selectedFlowers: [],
   bouquetType: '',
   note: { message: '', from: '', to: '' },
+  shuffleOrder: [],
 };
 
 function bouquetReducer(state, action) {
   switch (action.type) {
-    case 'TOGGLE_FLOWER': {
-      const id = action.payload;
-      const exists = state.selectedFlowers.includes(id);
-      if (exists) {
-        return { ...state, selectedFlowers: state.selectedFlowers.filter(f => f !== id) };
-      }
-      if (state.selectedFlowers.length >= 7) return state;
-      return { ...state, selectedFlowers: [...state.selectedFlowers, id] };
+    case 'ADD_FLOWER': {
+      if (state.selectedFlowers.length >= 10) return state;
+      const newSelected = [...state.selectedFlowers, action.payload];
+      return { ...state, selectedFlowers: newSelected, shuffleOrder: Array.from({ length: newSelected.length }, (_, i) => i) };
     }
+    case 'REMOVE_FLOWER': {
+      const id = action.payload;
+      const index = state.selectedFlowers.lastIndexOf(id);
+      if (index === -1) return state;
+      
+      const newSelected = [...state.selectedFlowers];
+      newSelected.splice(index, 1);
+      return { ...state, selectedFlowers: newSelected, shuffleOrder: Array.from({ length: newSelected.length }, (_, i) => i) };
+    }
+    case 'SET_SHUFFLE_ORDER':
+      return { ...state, shuffleOrder: action.payload };
     case 'SET_BOUQUET_TYPE':
       return { ...state, bouquetType: action.payload };
     case 'SET_NOTE':

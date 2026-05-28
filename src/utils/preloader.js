@@ -19,14 +19,13 @@ import orchidImg from '../assets/flowers/orchid.webp';
 import ranunculusImg from '../assets/flowers/ranunculus.webp';
 import zinniaImg from '../assets/flowers/zinnia.webp';
 import bush1 from '../assets/bushes/bush-1.png';
-import bush1Top from '../assets/bushes/bush-1-top.png';
 import bush2 from '../assets/bushes/bush-2.png';
 import bush3 from '../assets/bushes/bush-3.png';
 
 const ALL_IMAGES = [
   tulipImg, sunflowerImg, carnationImg, daisyImg, peonyImg, roseImg,
   anemoneImg, dahliaSrc, lilyImg, orchidImg, ranunculusImg, zinniaImg,
-  bush1, bush1Top, bush2, bush3,
+  bush1, bush2, bush3,
 ];
 
 function loadImage(src) {

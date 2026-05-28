@@ -35,6 +35,7 @@ export function encodeBouquet(state) {
     state.note.to || "",
     state.note.message || "",
     state.note.from || "",
+    state.shuffleOrder ? state.shuffleOrder.join(",") : "",
   ].join("|");
 
   return btoa(unescape(encodeURIComponent(compact)))
@@ -52,6 +53,11 @@ export function decodeBouquet(encoded) {
     const flowerCodes = parts[0].split(",");
     const selectedFlowers = flowerCodes.map((c) => SHORT_FLOWER[c] || c);
 
+    const orderStr = parts[5] || "";
+    const shuffleOrder = orderStr 
+      ? orderStr.split(",").map(Number) 
+      : Array.from({ length: selectedFlowers.length }, (_, i) => i);
+
     return {
       selectedFlowers,
       bouquetType: SHORT_TYPE[parts[1]] || "meadow",
@@ -60,6 +66,7 @@ export function decodeBouquet(encoded) {
         message: parts[3] || "",
         from: parts[4] || "",
       },
+      shuffleOrder,
     };
   } catch {
     return null;

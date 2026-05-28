@@ -88,9 +88,50 @@
   letter-spacing: 0.03em;
 }
 
-.flower-card__check {
+.flower-card__badge-container {
   position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
+  top: -8px;
+  right: -8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
   animation: scaleIn var(--duration-fast) var(--ease-out) both;
+  z-index: 2;
+}
+
+.flower-card__remove-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: white;
+  border: 1px solid var(--outline-variant);
+  color: var(--error);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.flower-card__remove-btn:hover {
+  background: var(--error-container);
+  color: var(--error);
+  transform: scale(1.1);
+}
+
+.flower-card__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 8px rgba(129, 81, 90, 0.2);
 }

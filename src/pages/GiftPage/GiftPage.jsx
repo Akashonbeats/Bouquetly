@@ -34,7 +34,7 @@ export default function GiftPage() {
     );
   }
 
-  const { selectedFlowers, bouquetType, note } = data;
+  const { selectedFlowers, bouquetType, note, shuffleOrder } = data;
 
   const handleCopy = async () => {
     try {
@@ -76,6 +76,7 @@ export default function GiftPage() {
           <BouquetDisplay
             selectedFlowers={selectedFlowers}
             bouquetType={bouquetType}
+            shuffleOrder={shuffleOrder}
             size="large"
           />
         </div>

@@ -1,0 +1,141 @@
+.selected-flowers-pill-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0; /* allows flex children to shrink below content size */
+  max-width: 240px;
+}
+
+.pill__header {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--outline);
+  opacity: 0.8;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.pill__header strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.selected-flowers-pill {
+  width: max-content;
+  max-width: 100%;
+  height: 48px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--outline-variant);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 6px;
+}
+
+/* Glow State */
+.selected-flowers-pill--glow {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 16px rgba(129, 81, 90, 0.15), inset 0 0 8px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.pill__scroller {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+}
+
+.pill__content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+  height: 100%;
+}
+
+/* Marquee Animation */
+@keyframes pillMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Because we duplicate content, -50% shifts exactly one content block */
+  }
+}
+
+.pill__scroller--marquee {
+  animation: pillMarquee 15s linear infinite;
+}
+
+.pill__scroller--marquee:hover {
+  animation-play-state: paused;
+}
+
+.pill__circle {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.pill__circle--empty {
+  border: 1px dashed var(--outline-variant);
+  color: var(--outline-variant);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.pill__circle--filled {
+  background: transparent;
+  animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.pill__circle--filled img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(0.9); /* slight padding natively */
+}
+
+.pill__circle--plus {
+  border: 1px dashed var(--outline-variant);
+  color: var(--outline-variant);
+  background: transparent;
+  animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Error Vibrate State ── */
+@keyframes pillVibrate {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.selected-flowers-pill--error {
+  animation: pillVibrate 0.15s ease-in-out 2;
+  border-color: var(--error) !important;
+}
+
+.pill__header--error strong {
+  color: var(--error);
+  text-shadow: 0 0 8px rgba(186, 26, 26, 0.4);
+}
+
+

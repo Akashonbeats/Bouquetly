@@ -1,0 +1,120 @@
+.milestone-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Let clicks pass through if needed, though it's brief */
+}
+
+.milestone-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(251, 251, 226, 0.9); /* matching var(--surface) */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.milestone-overlay__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.milestone-overlay__text {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.milestone-overlay__text h2 {
+  color: var(--primary);
+  margin-bottom: var(--space-2);
+}
+
+.milestone-overlay__text p {
+  color: var(--on-surface);
+  opacity: 0.8;
+}
+
+/* ── Floating Flowers ── */
+.milestone-overlay__flower {
+  position: absolute;
+  width: clamp(60px, 15vw, 120px);
+  height: auto;
+  opacity: 0;
+  filter: drop-shadow(0 10px 20px rgba(129, 81, 90, 0.2));
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Positions around the center text */
+/* Initial states (hidden/shrunk) */
+.milestone-overlay__flower--1 { top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0) rotate(-45deg); }
+.milestone-overlay__flower--2 { top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0) rotate(20deg); }
+.milestone-overlay__flower--3 { top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0) rotate(-15deg); }
+.milestone-overlay__flower--4 { top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0) rotate(35deg); }
+.milestone-overlay__flower--5 { top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0) rotate(-30deg); }
+
+/* ── Animation States ── */
+
+/* Visible (The bloom) */
+.milestone-overlay--visible .milestone-overlay__backdrop {
+  opacity: 1;
+}
+
+.milestone-overlay--visible .milestone-overlay__text {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.1s;
+}
+
+.milestone-overlay--visible .milestone-overlay__flower {
+  opacity: 1;
+}
+
+/* Specific expanded positions relative to the center */
+.milestone-overlay--visible .milestone-overlay__flower--1 {
+  transform: translate(-140%, -120%) scale(1) rotate(-15deg);
+  transition-delay: 0.05s;
+}
+.milestone-overlay--visible .milestone-overlay__flower--2 {
+  transform: translate(60%, -130%) scale(0.9) rotate(25deg);
+  transition-delay: 0.1s;
+}
+.milestone-overlay--visible .milestone-overlay__flower--3 {
+  transform: translate(-160%, 40%) scale(1.1) rotate(-35deg);
+  transition-delay: 0.15s;
+}
+.milestone-overlay--visible .milestone-overlay__flower--4 {
+  transform: translate(80%, 30%) scale(1) rotate(15deg);
+  transition-delay: 0.2s;
+}
+.milestone-overlay--visible .milestone-overlay__flower--5 {
+  transform: translate(-30%, -180%) scale(0.8) rotate(-5deg);
+  transition-delay: 0.25s;
+}
+
+/* Exiting (Shrink towards bottom where the pill is) */
+.milestone-overlay--exiting .milestone-overlay__backdrop {
+  opacity: 0;
+}
+
+.milestone-overlay--exiting .milestone-overlay__text {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+.milestone-overlay--exiting .milestone-overlay__flower {
+  /* Animate towards bottom center (where the pill typically resides) */
+  transform: translate(-50%, 300px) scale(0.2) !important;
+  opacity: 0 !important;
+  transition-duration: 0.5s;
+}

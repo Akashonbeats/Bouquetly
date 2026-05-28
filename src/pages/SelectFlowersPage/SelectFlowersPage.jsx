@@ -1,36 +1,76 @@
+import { useState, useEffect, useRef } from 'react';
 import { useTransitionNavigate } from '../../hooks/useTransitionNavigate';
 import { useBouquet, useBouquetDispatch } from '../../context/BouquetContext';
 import { FLOWERS } from '../../utils/flowers';
 import FlowerCard from '../../components/FlowerCard/FlowerCard';
+import SelectedFlowersPill from '../../components/SelectedFlowersPill/SelectedFlowersPill';
+import MilestoneOverlay from '../../components/MilestoneOverlay/MilestoneOverlay';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import '../BuilderPage.css';
 
-const MIN_FLOWERS = 4;
-const MAX_FLOWERS = 7;
+const MIN_FLOWERS = 5;
+const MAX_FLOWERS = 10;
 
 export default function SelectFlowersPage() {
   const { selectedFlowers } = useBouquet();
   const dispatch = useBouquetDispatch();
   const navigate = useTransitionNavigate();
 
+  const [showMilestone, setShowMilestone] = useState(false);
+  // If user navigates back to this page and already has >= 5 flowers, 
+  // assume they've already seen the milestone so we don't accidentally block clicks.
+  const milestoneSeenRef = useRef(selectedFlowers.length >= MIN_FLOWERS);
+  const [vibrate, setVibrate] = useState(false);
+
   const canProceed = selectedFlowers.length >= MIN_FLOWERS;
   const atMax = selectedFlowers.length >= MAX_FLOWERS;
 
-  const handleToggle = (id) => {
-    dispatch({ type: 'TOGGLE_FLOWER', payload: id });
+  // Trigger flashy overlay once when exactly 5 flowers are reached
+  useEffect(() => {
+    if (selectedFlowers.length === MIN_FLOWERS && !milestoneSeenRef.current) {
+      setShowMilestone(true);
+      milestoneSeenRef.current = true;
+      const t = setTimeout(() => setShowMilestone(false), 1500);
+      return () => clearTimeout(t);
+    }
+  }, [selectedFlowers.length]);
+
+  const handleAdd = (id) => {
+    if (atMax) {
+      setVibrate(true);
+      setTimeout(() => setVibrate(false), 300);
+      return;
+    }
+
+    // Block rapid clicks if the 5th flower was just selected and the splash is about to trigger
+    if (selectedFlowers.length >= MIN_FLOWERS && !milestoneSeenRef.current) {
+      return;
+    }
+
+    // Block any clicks while the splash screen is actively displaying
+    if (showMilestone) {
+      return;
+    }
+
+    dispatch({ type: 'ADD_FLOWER', payload: id });
+  };
+
+  const handleRemove = (id) => {
+    dispatch({ type: 'REMOVE_FLOWER', payload: id });
+  };
+
+  // Helper to count occurrences of a specific flower
+  const getFlowerCount = (id) => {
+    return selectedFlowers.filter(f => f === id).length;
   };
 
   return (
     <div className="builder-page">
+      <MilestoneOverlay isVisible={showMilestone} />
+      
       <div className="builder-page__body">
         <div className="builder-page__title-row">
           <h1 className="display-sm">pick your blooms</h1>
-          <span className="body-sm builder-page__counter">
-            <strong>{selectedFlowers.length}</strong> / {MAX_FLOWERS}
-            {selectedFlowers.length < MIN_FLOWERS && (
-              <span className="builder-page__hint"> · min {MIN_FLOWERS}</span>
-            )}
-          </span>
         </div>
 
         <div className="flower-grid stagger">
@@ -38,9 +78,10 @@ export default function SelectFlowersPage() {
             <FlowerCard
               key={flower.id}
               flower={flower}
-              selected={selectedFlowers.includes(flower.id)}
-              onToggle={handleToggle}
-              disabled={atMax && !selectedFlowers.includes(flower.id)}
+              count={getFlowerCount(flower.id)}
+              onAdd={handleAdd}
+              onRemove={handleRemove}
+              disabled={atMax}
             />
           ))}
         </div>
@@ -50,6 +91,9 @@ export default function SelectFlowersPage() {
         <button className="btn btn-text" onClick={() => navigate('/')}>
           <ArrowLeft size={16} strokeWidth={2} /> back
         </button>
+        
+        <SelectedFlowersPill vibrate={vibrate} />
+
         <button
           className="btn btn-primary"
           disabled={!canProceed}
