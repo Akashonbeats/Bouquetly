@@ -18,8 +18,12 @@ export default async function handler(req, res) {
   }
 
   const dynamicTitle = fromName 
-    ? `You got a bouquet from ${fromName} - Bouquetly` 
-    : `Bouquetly — Craft Digital Flower Bouquets`;
+    ? `${fromName} has made a bouquet for you.` 
+    : `Bouquetly - Craft Digital Flower Bouquets`;
+
+  const dynamicDescription = fromName
+    ? `Bouquetly • Build a beautiful digital flower bouquet, add a personalized note, and share it with someone you love.`
+    : `Build a beautiful digital flower bouquet, add a personalized note, and share it with someone you love via a unique link.`;
 
   // 2. Read the index.html file
   let htmlData = '';
@@ -49,6 +53,16 @@ export default async function handler(req, res) {
     htmlData = htmlData.replace(
       /<meta property="og:title" content=".*?"\s*\/>/i,
       `<meta property="og:title" content="${dynamicTitle}" />`
+    );
+
+    // Replace the default og:description and standard description with the dynamic one
+    htmlData = htmlData.replace(
+      /<meta name="description" content=".*?"\s*\/>/i,
+      `<meta name="description" content="${dynamicDescription}" />`
+    );
+    htmlData = htmlData.replace(
+      /<meta property="og:description" content=".*?"\s*\/>/i,
+      `<meta property="og:description" content="${dynamicDescription}" />`
     );
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
