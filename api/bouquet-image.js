@@ -4,8 +4,8 @@ export const config = {
   runtime: 'edge',
 };
 
-// Global cache for fonts to optimize performance
-let fontBuffers = null;
+// Global cache for font to optimize performance
+let fontBuffer = null;
 
 async function loadGoogleFont(fontFamily, weight = 400) {
   const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontFamily)}:wght@${weight}`;
@@ -23,35 +23,27 @@ async function loadGoogleFont(fontFamily, weight = 400) {
   throw new Error(`Failed to load font ${fontFamily} (${weight})`);
 }
 
-async function getFonts() {
-  if (!fontBuffers) {
+async function getFont() {
+  if (!fontBuffer) {
     try {
-      const [playfairData, dancingData] = await Promise.all([
-        loadGoogleFont('Playfair Display', 600),
-        loadGoogleFont('Dancing Script', 600)
-      ]);
-      fontBuffers = { playfairData, dancingData };
+      fontBuffer = await loadGoogleFont('Dancing Script', 600);
     } catch (error) {
-      console.error('Failed to load fonts dynamically, falling back to default', error);
-      // Fallback is handled in ImageResponse options
-      fontBuffers = { playfairData: null, dancingData: null };
+      console.error('Failed to load font dynamically, falling back to default', error);
+      fontBuffer = null;
     }
   }
-  return fontBuffers;
+  return fontBuffer;
 }
 
-function decodeBouquetData(id) {
+function decodeSenderName(id) {
   try {
-    if (!id) return { toName: '', fromName: '' };
+    if (!id) return '';
     const padded = id.replace(/-/g, "+").replace(/_/g, "/");
     const raw = decodeURIComponent(escape(atob(padded)));
     const parts = raw.split("|");
-    return {
-      toName: parts[2] || '',
-      fromName: parts[4] || ''
-    };
+    return parts[4] || ""; // Sender name is parts[4]
   } catch (e) {
-    return { toName: '', fromName: '' };
+    return '';
   }
 }
 
@@ -59,43 +51,62 @@ export default async function handler(req) {
   const url = new URL(req.url);
   const id = url.searchParams.get('id');
 
-  let titleText = 'Craft Digital Flower Bouquets';
-  let senderText = 'With love, from Bouquetly';
+  let displayText = '';
+  let showBottomText = false;
 
   if (id) {
-    const { toName, fromName } = decodeBouquetData(id);
-    if (fromName && toName) {
-      titleText = `${toName}, a custom bouquet has been crafted for you`;
-      senderText = `With love, from ${fromName}`;
-    } else if (fromName) {
-      titleText = 'A custom flower bouquet has been crafted for you';
-      senderText = `With love, from ${fromName}`;
-    } else if (toName) {
-      titleText = `${toName}, a custom bouquet has been crafted for you`;
-      senderText = 'Made with love';
-    } else {
-      titleText = 'A custom flower bouquet has been crafted for you';
-      senderText = 'Made with love';
-    }
+    const senderName = decodeSenderName(id) || 'Someone';
+    displayText = `${senderName} has made a bouquet for you.`;
+    showBottomText = true;
+  } else {
+    displayText = 'Bouquetly';
+    showBottomText = false;
   }
 
-  // Retrieve custom fonts
-  const fonts = await getFonts();
+  // Retrieve custom font
+  const dancingData = await getFont();
   const fontsOption = [];
-  if (fonts.playfairData) {
+  if (dancingData) {
     fontsOption.push({
-      name: 'Playfair Display',
-      data: fonts.playfairData,
+      name: 'Dancing Script',
+      data: dancingData,
       weight: 600,
       style: 'normal',
     });
   }
-  if (fonts.dancingData) {
-    fontsOption.push({
-      name: 'Dancing Script',
-      data: fonts.dancingData,
-      weight: 600,
-      style: 'normal',
+
+  const children = [
+    // Main Centered Text
+    {
+      type: 'div',
+      props: {
+        style: {
+          fontSize: '76px',
+          color: '#81515A',
+          textAlign: 'center',
+          fontFamily: dancingData ? 'Dancing Script' : 'cursive',
+          lineHeight: '1.3',
+          maxWidth: '1000px',
+        },
+        children: displayText,
+      },
+    }
+  ];
+
+  if (showBottomText) {
+    children.push({
+      type: 'div',
+      props: {
+        style: {
+          position: 'absolute',
+          bottom: '48px',
+          fontSize: '32px',
+          color: '#81515A',
+          opacity: '0.45',
+          fontFamily: dancingData ? 'Dancing Script' : 'cursive',
+        },
+        children: 'Bouquetly',
+      },
     });
   }
 
@@ -110,109 +121,11 @@ export default async function handler(req) {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #FBFBE2 0%, #FFD9DF 100%)',
-        padding: '30px',
+        position: 'relative',
         boxSizing: 'border-box',
+        padding: '60px',
       },
-      children: [
-        {
-          type: 'div',
-          props: {
-            style: {
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '2px solid rgba(129, 81, 90, 0.25)',
-              borderRadius: '16px',
-              padding: '40px 60px',
-              background: 'rgba(255, 255, 255, 0.45)',
-              boxShadow: '0 8px 32px rgba(129, 81, 90, 0.05)',
-              boxSizing: 'border-box',
-            },
-            children: [
-              // Badge
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    color: '#3B6663',
-                    letterSpacing: '8px',
-                    marginBottom: '32px',
-                    fontFamily: 'system-ui, sans-serif',
-                    textTransform: 'uppercase',
-                  },
-                  children: 'Bouquetly',
-                },
-              },
-              // Flower Emoji
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    fontSize: '84px',
-                    marginBottom: '24px',
-                  },
-                  children: '💐',
-                },
-              },
-              // Title
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    fontSize: '42px',
-                    fontWeight: '600',
-                    color: '#81515A',
-                    textAlign: 'center',
-                    fontFamily: fonts.playfairData ? 'Playfair Display' : 'serif',
-                    lineHeight: '1.35',
-                    marginBottom: '16px',
-                    maxWidth: '850px',
-                  },
-                  children: titleText,
-                },
-              },
-              // Sender / From line
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    fontSize: '56px',
-                    fontWeight: '600',
-                    color: '#3B6663',
-                    textAlign: 'center',
-                    fontFamily: fonts.dancingData ? 'Dancing Script' : 'cursive',
-                    marginTop: '12px',
-                  },
-                  children: senderText,
-                },
-              },
-              // Button CTA
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    background: '#81515A',
-                    color: '#FFFFFF',
-                    borderRadius: '30px',
-                    padding: '12px 36px',
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    fontFamily: 'system-ui, sans-serif',
-                    marginTop: '44px',
-                    boxShadow: '0 4px 12px rgba(129, 81, 90, 0.12)',
-                  },
-                  children: 'Open Your Bouquet',
-                },
-              },
-            ],
-          },
-        },
-      ],
+      children,
     },
   };
 
