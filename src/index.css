@@ -93,21 +93,18 @@
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--surface);
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
 body {
-  font-family: var(--font-body);
-  color: var(--on-surface);
-  background: linear-gradient(
-    170deg,
-    var(--surface) 0%,
-    var(--surface-container-low) 45%,
-    var(--primary-fixed) 100%
-  );
+  background: linear-gradient(135deg, var(--surface) 0%, #FFD9DF 100%);
   background-attachment: fixed;
-  line-height: 1.6;
-  min-height: 100vh;
-  min-height: 100dvh;
+}
+
+body.no-pink-gradient {
+  background: var(--surface);
 }
 
 #root {
@@ -385,4 +382,19 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 clamp(var(--space-4), 3vw, var(--space-6));
+}
+
+/* ── Mobile specific button & utility classes ── */
+@media (max-width: 600px) {
+  .mobile-hidden {
+    display: none;
+  }
+  
+  .btn.btn-circle-mobile {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    aspect-ratio: 1;
+  }
 }

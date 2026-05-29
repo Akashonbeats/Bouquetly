@@ -42,6 +42,9 @@ function TransitionLayout() {
   const prevHistoryIdx = useRef(window.history.state?.idx ?? 0);
 
   useEffect(() => {
+    // Reset scroll position on every navigation so we start at the top of the new page
+    window.scrollTo(0, 0);
+
     if (navigationType === 'POP') {
       const currentIdx = window.history.state?.idx ?? 0;
       const dir = currentIdx < prevHistoryIdx.current ? 'back' : 'forward';

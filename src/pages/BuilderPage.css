@@ -107,7 +107,38 @@
   flex-wrap: wrap;
   gap: var(--space-3);
   padding: var(--space-3) clamp(var(--space-4), 3vw, var(--space-6)) calc(var(--space-3) + env(safe-area-inset-bottom));
-  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .builder-page {
+    padding-bottom: 72px;
+  }
+  
+  .builder-page__nav {
+    position: fixed; /* Fixed is strictly better for floating apart from scroll */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: transparent;
+    pointer-events: none;
+    padding: var(--space-2) var(--space-3) calc(var(--space-4) + env(safe-area-inset-bottom));
+    justify-content: center;
+    gap: var(--space-4);
+  }
+  
+  .builder-page__nav > * {
+    pointer-events: auto;
+  }
+  
+  .builder-page__nav .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .builder-page__nav .btn.btn-circle-mobile {
+    padding: 0;
+  }
 }
 
 /* ── Write Note — editable card centered ── */

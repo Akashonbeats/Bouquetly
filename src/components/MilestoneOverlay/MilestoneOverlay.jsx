@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useBouquet } from '../../context/BouquetContext';
 import { FLOWERS } from '../../utils/flowers';
 import './MilestoneOverlay.css';
@@ -31,7 +32,7 @@ export default function MilestoneOverlay({ isVisible }) {
     return { ...f, key: `milestone-${id}-${index}` };
   });
 
-  return (
+  return createPortal(
     <div className={`milestone-overlay milestone-overlay--${renderState}`}>
       <div className="milestone-overlay__backdrop"></div>
       
@@ -51,6 +52,7 @@ export default function MilestoneOverlay({ isVisible }) {
           />
         ))}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

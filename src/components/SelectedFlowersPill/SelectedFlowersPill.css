@@ -6,6 +6,7 @@
   flex: 1;
   min-width: 0; /* allows flex children to shrink below content size */
   max-width: 240px;
+  position: relative;
 }
 
 .pill__header {
@@ -15,6 +16,9 @@
   opacity: 0.8;
   text-transform: lowercase;
   letter-spacing: 0.02em;
+  position: absolute;
+  top: -24px;
+  width: max-content;
 }
 
 .pill__header strong {
@@ -34,16 +38,19 @@
   overflow: hidden;
   position: relative;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 6px;
+  padding-block: 6px;
+  padding-inline: 4px;
 }
 
 /* Glow State */
 .selected-flowers-pill--glow {
   border-color: var(--primary);
   background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 16px rgba(129, 81, 90, 0.15), inset 0 0 8px rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 16px rgba(129, 81, 90, 0.15),
+    inset 0 0 8px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .pill__scroller {
@@ -57,7 +64,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 0 4px;
+  margin-inline: 3px;
   height: 100%;
 }
 
@@ -67,7 +74,9 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* Because we duplicate content, -50% shifts exactly one content block */
+    transform: translateX(
+      -50%
+    ); /* Because we duplicate content, -50% shifts exactly one content block */
   }
 }
 
@@ -117,15 +126,28 @@
 }
 
 @keyframes popIn {
-  0% { transform: scale(0.6); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* ── Error Vibrate State ── */
 @keyframes pillVibrate {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
 }
 
 .selected-flowers-pill--error {
@@ -138,4 +160,32 @@
   text-shadow: 0 0 8px rgba(186, 26, 26, 0.4);
 }
 
+@media (max-width: 600px) {
+  .selected-flowers-pill-wrapper {
+    max-width: 195px; /* Safely contains 5 circles + padding + gaps (approx 185px natural width) without triggering marquee */
+  }
 
+  .selected-flowers-pill {
+    height: 40px;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow:
+      0 0 16px rgba(129, 81, 90, 0.15),
+      inset 0 0 8px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .pill__circle {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+
+  .pill__content {
+    gap: 4px;
+  }
+
+  .pill__header {
+    font-size: 0.65rem;
+  }
+}

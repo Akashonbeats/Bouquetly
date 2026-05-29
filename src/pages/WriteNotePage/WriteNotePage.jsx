@@ -37,16 +37,17 @@ export default function WriteNotePage() {
       </div>
 
       <div className="builder-page__nav container">
-        <button className="btn btn-text" onClick={() => navigate('/build/bouquet')}>
-          <ArrowLeft size={16} strokeWidth={2} /> back
+        <button className="btn btn-outline btn-circle-mobile" onClick={() => navigate('/build/bouquet')}>
+          <ArrowLeft size={16} strokeWidth={2} /> <span className="mobile-hidden">back</span>
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary btn-circle-mobile"
+          style={{ border: '1.5px solid var(--outline-variant)' }}
           disabled={!canCreate}
           onClick={handleCreate}
           id="create-bouquet"
         >
-          create <Sparkles size={15} strokeWidth={2} />
+          <span className="mobile-hidden">create</span> <Sparkles size={15} strokeWidth={2} />
         </button>
       </div>
     </div>

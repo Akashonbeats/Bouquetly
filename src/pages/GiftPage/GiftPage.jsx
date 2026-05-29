@@ -57,10 +57,10 @@ export default function GiftPage() {
     <div className="gift-page">
       <header className="gift-page__header">
         <button className="gift-page__logo btn-reset" onClick={() => navigate('/')}>Bouquetly</button>
-        <button className="btn btn-outline gift-page__share-btn" onClick={handleCopy} id="share-btn">
+        <button className="btn btn-outline gift-page__share-btn btn-circle-mobile" onClick={handleCopy} id="share-btn">
           {copied
-            ? <><Check size={14} strokeWidth={2.5} /> copied</>
-            : <><Link2 size={14} strokeWidth={2} /> share</>
+            ? <><Check size={14} strokeWidth={2.5} /> <span className="mobile-hidden">copied</span></>
+            : <><Link2 size={14} strokeWidth={2} /> <span className="mobile-hidden">share</span></>
           }
         </button>
       </header>
