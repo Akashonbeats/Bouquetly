@@ -15,4 +15,5 @@
 - `vercel.json`: request rewrites.
 - `index.html`: SPA shell and default social metadata.
 - `.github/skills/`: APC composition, update, and custom-agent skills.
+- `.github/agents/`: APC Playgrounds, Orchestrator, Throughput Agent, standard specialists, and custom teammates.
 - `docs/`: APC architecture, product, decisions, plans, and quality context.

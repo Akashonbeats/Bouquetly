@@ -31,6 +31,12 @@ All agents read [AGENTS.md](../../AGENTS.md) and relevant context under `docs/`.
 | [UX](../../.github/agents/ux.agent.md) | Delegated | Romantic, calm, affectionate experience and accessible interaction | UI, layout, typography, color, or motion changes |
 | [Context Maintainer](../../.github/agents/context-maintainer.agent.md) | Delegated | Keep APC context and registry coherent | After meaningful work or agent changes |
 
+## Custom specialists
+
+| Agent | Mode | Purpose | Trigger |
+| --- | --- | --- | --- |
+| [Component Structure Guardian](../../.github/agents/component-structure-guardian.agent.md) | AUTO | Keep component and folder structure clean, legible, and functionally safe | All UI work, structure changes, and broad refactors |
+
 ## Human boundaries
 
 - Preserve the romantic bouquet-maker identity.

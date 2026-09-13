@@ -28,6 +28,8 @@ Surface conflicts instead of silently choosing an important product or engineeri
 - [Quality](docs/quality/README.md)
 - [Agent registry](docs/agents/registry.md) (created after APC composition)
 
+The custom Component Structure Guardian is AUTO-only. It protects human-navigable component and folder organization and joins UI, structure, and broad-refactor work through the Orchestrator without becoming a second coordinator.
+
 ## APC operation
 
 The three APC skills live in `.github/skills/`. The eventual Playground Orchestrator is the only general-purpose coordinator; specialists are delegated workers. Plan Playground is read-only, Run Playground is the normal implementation path, and Run Playground (Low Credit) uses the APC Throughput Agent.

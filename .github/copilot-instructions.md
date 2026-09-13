@@ -8,4 +8,6 @@ The Playground Orchestrator is the central coordinator for meaningful work. It s
 
 Plan Playground is read-only. Run Playground is the normal implementation entry point. Run Playground (Low Credit) uses the APC Throughput Agent and must not claim full multi-agent coverage when it was not used.
 
+The Component Structure Guardian is an AUTO-only specialist for human-navigable component and folder structure. The Orchestrator should delegate it for UI work, structure changes, and broad refactors when its focused review is relevant.
+
 Preserve human-confirmed context and label AI-derived product understanding **AI Understanding — Reference Only**. Do not create commits, push, create or merge pull requests, approve pull requests, or publish releases. Finish with **Ready for Developer Review**.
